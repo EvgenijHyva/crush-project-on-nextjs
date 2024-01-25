@@ -5,6 +5,8 @@ export interface MealItemProps {
 	image: string;
 	summary: string;
 	creator: string;
+	creator_email: string;
+	instructions: string;
 }
 
 
@@ -15,6 +17,8 @@ export class MealItem implements MealItemProps {
 	image: string;
 	summary: string;
 	creator: string;
+	creator_email: string;
+	instructions: string;
 
 	constructor(item: MealItemProps) {
 		this.id = item.id;
@@ -23,5 +27,7 @@ export class MealItem implements MealItemProps {
 		this.image = item.image;
 		this.summary = item.summary;
 		this.creator = item.creator;
+		this.creator_email = item.creator_email;
+		this.instructions = item.instructions;
 	}
 }
