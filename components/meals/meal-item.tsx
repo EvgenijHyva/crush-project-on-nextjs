@@ -3,7 +3,7 @@ import styles from "./meal-item.module.css";
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { MealItemProps } from './meals-grid';
+import { MealItemProps } from '@/lib/app-types';
 
 export default function MealItem({ title, slug, image, summary, creator }: MealItemProps) {
 	return (

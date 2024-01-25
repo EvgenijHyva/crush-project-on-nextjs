@@ -1,14 +1,6 @@
 import styles from "./meals-grid.module.css";
 import MealItem from './meal-item';
-
-export interface MealItemProps {
-	id: number;
-	title: string;
-	slug: string;
-	image: string;
-	summary: string;
-	creator: string;
-}
+import { MealItemProps } from '@/lib/app-types';
 
 interface MealsGridProps {
 	meals: MealItemProps[];
