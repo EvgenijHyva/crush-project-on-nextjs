@@ -31,3 +31,9 @@ export class MealItem implements MealItemProps {
 		this.instructions = item.instructions;
 	}
 }
+
+export interface IMeal extends Omit<MealItemProps, "id" | "slug" | "image"> {
+	image: File;
+}
+
+export interface IMealDB extends Omit<MealItemProps, "id"> { };

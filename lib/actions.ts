@@ -1,10 +1,8 @@
 "use server";
 
-import { MealItemProps } from './app-types';
-
-interface IMeal extends Omit<MealItemProps, "id" | "slug"> {
-	image: any;
-}
+import { redirect } from 'next/navigation';
+import { IMeal } from './app-types';
+import { saveMeal } from './meals';
 
 export async function shareMeal(formData: FormData) {
 	"use server";
@@ -12,10 +10,11 @@ export async function shareMeal(formData: FormData) {
 		title: formData.get("title") as string,
 		summary: formData.get("summary") as string,
 		instructions: formData.get("instructions") as string,
-		image: formData.get("image") as string,
+		image: formData.get("image") as File,
 		creator_email: formData.get("email") as string,
 		creator: formData.get("name") as string,
 	};
 
-	console.log(meal)
+	await saveMeal(meal);
+	redirect("/meals");
 }
