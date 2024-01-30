@@ -50,7 +50,6 @@ export default function ImagePicker({ label, name, required = false, showRequire
 					name={name}
 					ref={imageInputRef}
 					onChange={handleImageChange}
-					required={required}
 				/>
 				<button type='button' className={styles.button} onClick={handleClick}>
 					<div className={styles.preview}>
