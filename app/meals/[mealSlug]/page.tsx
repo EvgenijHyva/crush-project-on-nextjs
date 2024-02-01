@@ -21,7 +21,7 @@ export default async function MealsWithSlugPage({ params: { mealSlug } }: MealsP
 	return (<>
 		<header className={styles.header}>
 			<div className={styles.image}>
-				<Image src={meal.image} fill alt={meal.title} />
+				<Image src={`https://evgeny-nextjs-demo-meals-images.s3.amazonaws.com${meal.image}`} fill alt={meal.title} />
 			</div>
 			<div className={styles.headerText}>
 				<h1> {meal.title} </h1>

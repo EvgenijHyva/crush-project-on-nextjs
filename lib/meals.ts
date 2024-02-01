@@ -1,10 +1,9 @@
-import sql from "better-sqlite3";
 import slugify from 'slugify';
 import xss from 'xss';
-import { IMeal, MealItem, MealItemProps } from './app-types';
 import fs from "node:fs";
+import { db, s3 } from "./storage";
+import { IMeal, MealItem, MealItemProps } from './app-types';
 
-const db = sql("meals.db");
 
 export async function getMeals(): Promise<MealItemProps[]> {
 	await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -27,13 +26,23 @@ export async function saveMeal(meal: IMeal) {
 
 	const relFilePath = `images/${fileName}`;
 
-	const stream = fs.createWriteStream(`public/${relFilePath}`);
 	const bufferedImage = await meal.image.arrayBuffer();
+	/* 
+	const stream = fs.createWriteStream(`public/${relFilePath}`);
 	stream.write(Buffer.from(bufferedImage), (err) => {
 		if (err) {
 			throw new Error(`Saving image (${meal.image.name} -> ${fileName}) is failed.`)
 		}
-	});
+	}); 
+	*/
+	s3.putObject({
+		Bucket: "evgeny-nextjs-demo-meals-images",
+		Key: relFilePath,
+		Body: Buffer.from(bufferedImage),
+		ContentType: meal.image.type,
+	})
+		.then(data => { console.log("success", data) })
+		.catch(console.error)
 	const imagePath = `/${relFilePath}`
 	const dbMeal = { ...meal, slug, image: imagePath };
 	console.log(dbMeal);
