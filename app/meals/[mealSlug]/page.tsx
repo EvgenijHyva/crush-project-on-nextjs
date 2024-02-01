@@ -1,6 +1,7 @@
 import { getMeal } from '@/lib/meals';
 import styles from "./page.module.css";
 import Image from 'next/image';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 interface MealsParams {
@@ -8,6 +9,30 @@ interface MealsParams {
 		mealSlug: string;
 	}
 	searchParams: {}
+}
+
+export async function generateMetadata({ params: { mealSlug } }: MealsParams): Promise<Metadata> {
+	const meal = await getMeal(mealSlug);
+
+	if (!meal) {
+		notFound();
+	}
+
+	return {
+		title: meal?.title ?? "Single meal",
+		description: `You can use the recipe for cooking delicious ${meal?.title ?? ""} meal. Summary ${meal?.summary}`,
+		authors: [{ name: meal?.creator }],
+		publisher: meal?.creator_email,
+		creator: meal?.creator,
+		keywords: [meal.title, meal.creator, meal.slug],
+		formatDetection: {
+			address: false,
+			email: true,
+			telephone: false,
+			url: false,
+			date: false
+		}
+	};
 }
 
 export default async function MealsWithSlugPage({ params: { mealSlug } }: MealsParams) {

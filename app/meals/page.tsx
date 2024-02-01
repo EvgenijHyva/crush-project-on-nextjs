@@ -4,6 +4,13 @@ import styles from "./page.module.css";
 import MealsGrid from '@/components/meals/meals-grid';
 import { getMeals } from '@/lib/meals';
 import LoadingConditionally from './loading-out';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: "All Meals",
+	description: "List of published meals"
+}
+
 
 async function Meals() {
 	const meals = await getMeals();
